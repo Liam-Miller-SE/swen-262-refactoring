@@ -39,35 +39,21 @@ public class Board {
 	   // put them in the correct location in the array
 	   // Set the values of numWhites and numBlues to 12 each
 	   pieces = new Piece[8][8];
-/*TODO: add pieces to board
-	   // create blue pices
-	   pieces[1] = new SinglePiece( Color.blue );
-	   pieces[3] = new SinglePiece( Color.blue );
-	   pieces[5] = new SinglePiece( Color.blue );
-	   pieces[7] = new SinglePiece( Color.blue );
-	   pieces[8] = new SinglePiece( Color.blue );
-	   pieces[10] = new SinglePiece( Color.blue );
-	   pieces[12] = new SinglePiece( Color.blue );
-	   pieces[14] = new SinglePiece( Color.blue );
-	   pieces[17] = new SinglePiece( Color.blue );
-	   pieces[19] = new SinglePiece( Color.blue );
-	   pieces[21] = new SinglePiece( Color.blue );
-	   pieces[23] = new SinglePiece( Color.blue );
 
-	   // create the white pieces
-	   pieces[40] = new SinglePiece( Color.white );
-	   pieces[42] = new SinglePiece( Color.white );
-	   pieces[44] = new SinglePiece( Color.white );
-	   pieces[46] = new SinglePiece( Color.white );
-	   pieces[49] = new SinglePiece( Color.white );
-	   pieces[51] = new SinglePiece( Color.white );
-	   pieces[53] = new SinglePiece( Color.white );
-	   pieces[55] = new SinglePiece( Color.white );
-	   pieces[56] = new SinglePiece( Color.white );
-	   pieces[58] = new SinglePiece( Color.white );
-	   pieces[60] = new SinglePiece( Color.white );
-	   pieces[62] = new SinglePiece( Color.white );
-*/
+	   // create white pieces
+	   for(int y = 0; y < 3; y++ ){
+	   		for (int x = 0; x < 8; x+=2){
+	   			pieces[y][x + (y % 2)] = new SinglePiece(Color.white);
+			}
+	   }
+
+       // create black pieces
+       for(int y = 5; y < 8; y++ ){
+           for (int x = 0; x < 8; x+=2){
+               pieces[y][x + (y % 2)] = new SinglePiece(Color.blue);
+           }
+       }
+
    }
 
    

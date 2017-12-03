@@ -159,7 +159,7 @@ public class CheckerGUI extends JFrame implements ActionListener
 
                 jButton1.setPreferredSize(new Dimension(80, 80));
                 jButton1.setActionCommand(x + "," + y);
-                if ((y * 8) + x % 2 == 0)
+                if (y % 2 == x %2)
                 {
                     jButton1.setBackground(Color.blue);
                 } else
@@ -432,6 +432,7 @@ public class CheckerGUI extends JFrame implements ActionListener
                     temp = (JButton) possibleSquares[x][y];
                     temp.setIcon(null);
                 }
+                
             }
         }
 

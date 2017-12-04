@@ -423,6 +423,7 @@ public class CheckerGUI extends JFrame implements ActionListener
                             } catch (Exception e)
                             {
                             }
+
                         }
                         //if there isnt a piece there
                     }
@@ -431,8 +432,9 @@ public class CheckerGUI extends JFrame implements ActionListener
                     //show no picture
                     temp = (JButton) possibleSquares[x][y];
                     temp.setIcon(null);
+
                 }
-                
+
             }
         }
 

@@ -337,6 +337,7 @@ public class CheckerGUI extends JFrame implements ActionListener
         }
         //the board to read information from
         Board board = theFacade.stateOfBoard();
+
         //a temp button to work with
         JButton temp = new JButton();
 
@@ -345,6 +346,9 @@ public class CheckerGUI extends JFrame implements ActionListener
         {
             for (int y = 0; y < 8; y++)
             {
+
+
+
                 // if there is a piece there
                 if (board.occupied(x, y))
                 {
@@ -358,14 +362,16 @@ public class CheckerGUI extends JFrame implements ActionListener
                         {
 
                             //show a blue single piece in that spot board
-                            temp = (JButton) possibleSquares[x][y];
+                            temp = (JButton) possibleSquares[y][x];
 
                             //get the picture from the web
+                            temp.setIcon(new ImageIcon("src/BlueSingle.gif"));
                             try
                             {
-                                temp.setIcon(
-                                        new ImageIcon(new URL("file:BlueSingle.gif")));
-                            } catch (MalformedURLException e)
+
+                                possibleSquares[y][x] = temp;
+
+                            } catch (Exception e)
                             {
                                 System.out.println(e.getMessage());
                             }
@@ -375,9 +381,9 @@ public class CheckerGUI extends JFrame implements ActionListener
                         {
 
                             //show a blue king piece in that spot board
-                            temp = (JButton) possibleSquares[x][y];
+                            temp = (JButton) possibleSquares[y][x];
 
-                            //get the picture formt the web
+                            //get the picture from the web
                             try
                             {
                                 temp.setIcon(
@@ -387,7 +393,6 @@ public class CheckerGUI extends JFrame implements ActionListener
                             }
 
                         }
-
                         //check to see if the color is white
                     } else if (board.colorAt(x, y) == Color.white)
                     {
@@ -397,13 +402,19 @@ public class CheckerGUI extends JFrame implements ActionListener
                         {
 
                             //show a blue single piece in that spot board
-                            temp = (JButton) possibleSquares[x][y];
+                            temp = (JButton) possibleSquares[y][x];
+
 
                             //get the picture from the web
+                            temp.setIcon(new ImageIcon("src/WhiteSingle.gif"));
                             try
                             {
-                                temp.setIcon(
-                                        new ImageIcon(new URL("file:WhiteSingle.gif")));
+
+
+                                possibleSquares[y][x] = temp;
+
+                                //                           temp.setIcon(
+                                //                                  new ImageIcon(new URL("file:src/WhiteSingle.bmp")));
                             } catch (Exception e)
                             {
                             }
@@ -413,7 +424,7 @@ public class CheckerGUI extends JFrame implements ActionListener
                         {
 
                             //show a blue king piece in that spot board
-                            temp = (JButton) possibleSquares[x][y];
+                            temp = (JButton) possibleSquares[y][x];
 
                             //get the picture from the web
                             try
@@ -430,10 +441,11 @@ public class CheckerGUI extends JFrame implements ActionListener
                 } else
                 {
                     //show no picture
-                    temp = (JButton) possibleSquares[x][y];
+                    temp = (JButton) possibleSquares[y][x];
                     temp.setIcon(null);
 
                 }
+
 
             }
         }

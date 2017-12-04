@@ -24,7 +24,7 @@ import java.awt.*;
  */
 public class Board {
 
-   private Piece pieces[][]; // the pieces that are on the board
+   public Piece pieces[][]; // the pieces that are on the board
    public static int SINGLE = 0;
    public static int KING = 1;
 
@@ -53,6 +53,16 @@ public class Board {
                pieces[y][x + (y % 2)] = new SinglePiece(Color.blue);
            }
        }
+
+//	   for(int i = 0; i < 8; i++){
+//		   for(int j = 0; j < 8; j++){
+//			   if(pieces[i][j] == null)
+//				   System.out.print('.' + "\t");
+//			   else
+//				   System.out.print("X" + "\t");
+//		   }
+//		   System.out.print("\n");
+//	   }
 
    }
 

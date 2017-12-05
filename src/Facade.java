@@ -124,8 +124,16 @@ public class Facade extends Component {
 		endSpace = space;
 		makeLocalMove();
 	    }
+
 	}
-	
+        if(startSpace != null)
+        {
+            System.out.println("Start: " + startSpace.toString());
+
+        }
+        if(endSpace!=null){
+            System.out.println("end: " + endSpace.toString());
+        }
 	generateActionPerformed( "update" );   
 	
     }
@@ -144,6 +152,14 @@ public class Facade extends Component {
 	    // Takes the information of a move and calls makeMove() 
 	    // in a localPlayer
 	    boolean result = activePlayer.makeMove( startSpace, endSpace );
+	    if(result)
+        {
+            System.out.println("Legal move");
+        }
+        else
+        {
+            System.out.println("you done fucked up a-aron");
+        }
 	}
 	
 	// Reset startSpace and endSpace to null

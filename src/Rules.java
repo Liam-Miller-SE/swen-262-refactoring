@@ -319,7 +319,7 @@ public class Rules {
 		//blue pieces move 0->8
 		//white pieces move 8->0
 		Vector<Point> endPoints = new Vector<>();
-		if(pieceType == KING || aPlayer.getColor() == Color.WHITE){
+		if(pieceType == KING || aPlayer.getColor() == Color.BLACK){
 			if(!theBoard.occupied(piecePosition.x - 1, piecePosition.y - 1)){
 				endPoints.add(new Point(piecePosition.x - 1, piecePosition.y - 1));
 			}
@@ -335,7 +335,7 @@ public class Rules {
 				endPoints.add(new Point(piecePosition.x + 2, piecePosition.y - 2));
 			}
 		}
-		if(pieceType == KING || aPlayer.getColor() == Color.BLACK){
+		if(pieceType == KING || aPlayer.getColor() == Color.WHITE){
 			if(!theBoard.occupied(piecePosition.x - 1, piecePosition.y + 1)){
 				endPoints.add(new Point(piecePosition.x - 1, piecePosition.y + 1));
 			}

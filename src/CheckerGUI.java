@@ -265,7 +265,7 @@ public class CheckerGUI extends JFrame implements ActionListener
             //if a square gets clicked
             if (Character.isDigit(e.getActionCommand().charAt(0)))
             {
-
+                System.out.println(e.getActionCommand());
                 //call selectSpace with the button pressed
                 theFacade.selectSpace(new Point(Integer.parseInt(e.getActionCommand().split(",")[0]), Integer.parseInt(e.getActionCommand().split(",")[1])));
 

@@ -154,7 +154,10 @@ public class Facade extends Component {
 	    boolean result = activePlayer.makeMove( startSpace, endSpace );
 	    if(result)
         {
-            System.out.println("Legal move");
+            theBoard.movePiece(startSpace, endSpace);
+
+            theDriver.endTurn(theDriver.getOppositePlayer(), endSpace);
+
         }
         else
         {

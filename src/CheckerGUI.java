@@ -155,7 +155,7 @@ public class CheckerGUI extends JFrame implements ActionListener
             {
                 JButton jButton1 = new JButton();
                 jButton1.addActionListener(this);
-                possibleSquares[x][y] = jButton1;
+                possibleSquares[y][x] = jButton1;
 
                 jButton1.setPreferredSize(new Dimension(80, 80));
                 jButton1.setActionCommand(x + "," + y);
@@ -384,10 +384,10 @@ public class CheckerGUI extends JFrame implements ActionListener
                             temp = (JButton) possibleSquares[y][x];
 
                             //get the picture from the web
+                            temp.setIcon(new ImageIcon("src/BlueKing.gif"));
                             try
                             {
-                                temp.setIcon(
-                                        new ImageIcon(new URL("file:BlueKing.gif")));
+                                possibleSquares[y][x] = temp;
                             } catch (Exception e)
                             {
                             }
@@ -427,10 +427,12 @@ public class CheckerGUI extends JFrame implements ActionListener
                             temp = (JButton) possibleSquares[y][x];
 
                             //get the picture from the web
+                            temp.setIcon(new ImageIcon("src/WhiteKing.gif"));
                             try
                             {
-                                temp.setIcon(
-                                        new ImageIcon(new URL("file:WhiteKing.gif")));
+
+                                possibleSquares[y][x] = temp;
+
                             } catch (Exception e)
                             {
                             }

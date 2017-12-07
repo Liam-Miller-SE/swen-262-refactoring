@@ -41,22 +41,22 @@ public class Board {
 	   pieces = new Piece[8][8];
 
 	   // create white pieces
-	   for(int y = 2; y < 3; y++ ){
+	   for(int y = 0; y < 3; y++ ){
 	   		for (int x = 0; x < 8; x+=2){
-	   			pieces[y][x + (y % 2)] = new SinglePiece(Color.white);
+	   			pieces[x + (y % 2)][y] = new SinglePiece(Color.white);
 			}
 	   }
 
        // create black pieces
-       for(int y = 5; y < 6; y++ ){
+       for(int y = 5; y < 8; y++ ){
            for (int x = 0; x < 8; x+=2){
-               pieces[y][x + (y % 2)] = new SinglePiece(Color.blue);
+               pieces[x + (y % 2)][y] = new SinglePiece(Color.blue);
            }
        }
 
 	   for(int i = 0; i < 8; i++){
 		   for(int j = 0; j < 8; j++){
-			   if(pieces[i][j] == null)
+			   if(pieces[j][i] == null)
 				   System.out.print('.' + "\t");
 			   else
 				   System.out.print("X" + "\t");
@@ -95,8 +95,14 @@ public class Board {
 	   	
 		   pieces[end.x][end.y] = pieces[start.x][start.y];
 		   pieces[start.x][start.y] = null;
-
-
+		   if(Math.abs(end.x - start.x) > 1){
+			   pieces[(start.x + end.x) / 2][(start.y + end.y) / 2] = null;
+		   }
+		   if(end.y == 0 || end.y == 7)
+		   {
+				Point p = new Point(end.x, end.y);
+				kingPiece(p);
+		   }
 	   }
 
 	   return returnValue;
@@ -194,11 +200,16 @@ public class Board {
 	   // else retrun the color of the piece
 	   
 	   if( occupied( space ) ) {
-		   Piece p = pieces[space.x][space.y];
-		   if(p != null) {
-			   returnValue = p.getColor();
-		   }
-		   
+	   	try {
+			Piece p = pieces[space.x][space.y];
+			if (p != null) {
+				returnValue = p.getColor();
+			}
+		}
+		catch (Exception e)
+		{
+			return null;
+		}
 	   }
    
        return returnValue;
@@ -337,6 +348,6 @@ public class Board {
 
 	  return whitePieces;
  }
- 
+
 }//Board
 

@@ -83,7 +83,6 @@ public abstract class Player {
 	
 	theMove = new Move(this, start, end );
 	retval  = theRules.validateMove( theMove );
-      
 	return retval;
     }
     

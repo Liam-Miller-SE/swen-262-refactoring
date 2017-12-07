@@ -29,10 +29,6 @@ public class Rules {
 	private Board theBoard; // The board
 	private Driver theDriver; // The driver controlling the program.
 	private Move currentMove; // The current move in the game.
-	//private int adjacentSpots[] = { -9, -7, 7, 9 }; // An array of adjacent
-	// spots to check.
-	//private int secondSpots[] = { -18, -14, 14, 18 }; // An array of spots
-	// adj. to adjacentSpots.
 	private Point middle;// = 0;  // The space of a piece that gets jumped
 	private final int KING = 1; // Constant to represent a king piece.
 	private Vector leftWallPieces = new Vector(); // Positions of the left
@@ -68,7 +64,7 @@ public class Rules {
 		currentMove = move;
 		boolean retval = false;
 
-		try {
+
 
 			boolean anotherMove = false;  // If there is another move that
 			// must be made.
@@ -85,107 +81,18 @@ public class Rules {
 			Vector pieces = new Vector();
 			Vector tempVec = new Vector();
 			Vector startVec = new Vector();
-			//Vector possibleJumps = new Vector();
-			Vector possibleJumps = checkForPossibleJumps(start, pieceType,
+		ArrayList<Point> possibleJumps = new ArrayList<>();
+		try {
+			possibleJumps = checkForPossibleJumps(start, pieceType,
 					player);
-			// Check all pieces for jumps.
-			//if ( player.getColor() == Color.white ) {
-			//pieces = theBoard.whitePieces();
-			//} else {
-			//pieces = theBoard.bluePieces();
-			//}
-			return possibleJumps.contains(move.endLocation());
-		}
-		catch (Exception e){return  false;}
-			// For each piece of the current color, see if there are forced jumps.
-		/*	for(int x = 0; x < theBoard.sizeOf().x; x++){
-				for (int y = 0; y < theBoard.sizeOf().y; y++)
-				{
-					if (theBoard.occupied(x,y))
-					{
-						if (theBoard.getPieceAt(x, y).getColor() == player.getColor())
-						{
-							tempVec = checkForPossibleJumps(new Point(x,y), pieceType, player);
-							if (!tempVec.isEmpty())
-							{
-								startVec.addElement(new Point(x,y));
-								possibleJumps.addAll(tempVec);
-							}
-						}
-					}
-				}
-			}*/
-/*
-
-			// Only proceed if player is trying to move one of his own pieces
-
-			if ( !theBoard.colorAt( start ).equals(
-					theDriver.getOppositePlayer().getColor() ) ) {
-				// If there is a possible jump it must be made so the end
-				// position must match one of the possible jumps.
-				if ( startVec.contains(  start  ) ) {
-					possibleJumps = checkForPossibleJumps( start, pieceType,
-							player );
-					if ( possibleJumps.contains( end ) ) {
-						// Move the piece
-						theBoard.movePiece( start, end );
-						// Remove the jumped piece
-						theBoard.removePiece( middle );
-						middle = null;
-						// And if there is a possible multiple jump.
-						anotherMove = checkForPossibleJumps( end, pieceType,
-								player ).size() > 0;
-						// If there is another jump to make, next turn will be
-						// current player's and he must move last piece moved.
-						if ( anotherMove ) {
-							theDriver.endTurn( player, end );
-						}
-						// Otherwise, next turn should be the opposite player's.
-						else {
-							theDriver.endTurn( oppositePlayer, null );
-						}
-						retval = true;
-					} // There is no required jump.
-				}
-				// Otherwise the player is free to make any move that is legal.
-				else if ( possibleJumps.isEmpty() ) {
-
-					// If the piece starts on a wall and it's end position is
-					// valid then the move is legal.
-
-					// If the end position is not occupied then validate move.
-					if ( !theBoard.occupied( end ) ) {
-						retval = validateMove( start, end, player );
-					}
-
-					// If move was OK check end conditions. If game was not won,
-					// end turn.
-					if ( retval ) {
-
-						// If a move was made, see if the piece should be kinged
-						checkForMakeKing( end, pieceType );
-						gameOver = checkEndCond();
-						if ( gameOver ) {
-							theDriver.endGame( player.getName() +
-									" won the game." );
-						} else {
-							theBoard.movePiece( start, end );
-							theDriver.endTurn( oppositePlayer, null );
-						}
-
-					}
-				} // Move is either valid or not.
-			} // end if piece on start space is the correct color
-
-			// If the move was not valid, tell the player.
-			if ( !retval ) {
-				theDriver.endTurn( player, null );
+			for(Point p : possibleJumps){
+				System.out.println(p.toString());
 			}
-			checkForMakeKing(end, pieceType);
-		} catch ( Exception e ) { }
-
-		return retval;
-*/
+			return possibleJumps.contains(move.endLocation()) && move.getPlayer() == player;
+		}
+		catch (Exception e) {
+			return false;
+		}
 	}
 
 	/**
@@ -222,7 +129,7 @@ public class Rules {
 
 		boolean retval = false;
 		// A vector of any possible jumps that can be made.
-		Vector possibleJumps = new Vector();
+		ArrayList<Point> possibleJumps = new ArrayList<>();
 
 		Player player = currentMove.getPlayer(); // Current player.
 
@@ -307,41 +214,47 @@ public class Rules {
 	 *
 	 *  @return possibleJumps which contains end positions of possible jumps.
 	 */
-	private Vector checkForPossibleJumps( Point piecePosition, int pieceType,
+	private ArrayList<Point> checkForPossibleJumps( Point piecePosition, int pieceType,
 										  Player aPlayer ) {
 		//blue pieces move 0->8
 		//white pieces move 8->0
-		Vector<Point> endPoints = new Vector<>();
-		if(pieceType == KING || aPlayer.getColor() == Color.WHITE){
-			if(!theBoard.occupied(piecePosition.y - 1, piecePosition.x - 1)){
-				endPoints.add(new Point(piecePosition.y - 1, piecePosition.x - 1));
+		System.out.println(aPlayer.getColor());
+		ArrayList<Point> endPoints = new ArrayList<>();
+		if(theBoard.colorAt(piecePosition) == aPlayer.getColor())
+		{
+			return null;
+		}
+
+		if((pieceType == KING && aPlayer.getColor() == Color.white)|| aPlayer.getColor() == Color.BLUE){
+			if(!theBoard.occupied(piecePosition.x - 1, piecePosition.y + 1)){
+				endPoints.add(new Point(piecePosition.x - 1, piecePosition.y + 1));
 			}
-			else if (theBoard.colorAt(piecePosition.y - 1, piecePosition.x - 1) != aPlayer.getColor()
-					&& !theBoard.occupied(piecePosition.y - 2, piecePosition.x - 2)){
-				endPoints.add(new Point(piecePosition.y - 2, piecePosition.x - 2));
+			else if (theBoard.colorAt(piecePosition.x - 1, piecePosition.y + 1) == aPlayer.getColor()
+					&& !theBoard.occupied(piecePosition.x - 2, piecePosition.y + 2)){
+				endPoints.add(new Point(piecePosition.x - 2, piecePosition.y + 2));
 			}
-			if(!theBoard.occupied(piecePosition.y - 1, piecePosition.x + 1)){
-				endPoints.add(new Point(piecePosition.y - 1, piecePosition.x + 1));
+			if(!theBoard.occupied(piecePosition.x + 1, piecePosition.y + 1)){
+				endPoints.add(new Point(piecePosition.x + 1, piecePosition.y + 1));
 			}
-			else if (theBoard.colorAt(piecePosition.y - 1, piecePosition.x + 1) != aPlayer.getColor()
-					&& !theBoard.occupied(piecePosition.y - 2, piecePosition.x + 2)){
-				endPoints.add(new Point(piecePosition.y - 2, piecePosition.x + 2));
+			else if (theBoard.colorAt(piecePosition.x + 1, piecePosition.y + 1) == aPlayer.getColor()
+					&& !theBoard.occupied(piecePosition.x + 2, piecePosition.y + 2)){
+				endPoints.add(new Point(piecePosition.x + 2, piecePosition.y + 2));
 			}
 		}
-		if(pieceType == KING || aPlayer.getColor() == Color.BLACK){
-			if(!theBoard.occupied(piecePosition.y + 1, piecePosition.x - 1)){
-				endPoints.add(new Point(piecePosition.y + 1, piecePosition.x - 1));
+		if((pieceType == KING && aPlayer.getColor() == Color.blue) || aPlayer.getColor() == Color.WHITE){
+			if(!theBoard.occupied(piecePosition.x - 1, piecePosition.y - 1)){
+				endPoints.add(new Point(piecePosition.x - 1, piecePosition.y -1));
 			}
-			else if (theBoard.colorAt(piecePosition.y + 1, piecePosition.x - 1) != aPlayer.getColor()
-					&& !theBoard.occupied(piecePosition.y + 2, piecePosition.x - 2)){
-				endPoints.add(new Point(piecePosition.y + 2, piecePosition.x - 2));
+			else if (theBoard.colorAt(piecePosition.x - 1, piecePosition.y - 1) == aPlayer.getColor()
+					&& !theBoard.occupied(piecePosition.x - 2, piecePosition.y - 2)){
+				endPoints.add(new Point(piecePosition.x - 2, piecePosition.y - 2));
 			}
-			if(!theBoard.occupied(piecePosition.y + 1, piecePosition.x + 1)){
-				endPoints.add(new Point(piecePosition.y + 1, piecePosition.x + 1));
+			if(!theBoard.occupied(piecePosition.x + 1, piecePosition.y - 1)){
+				endPoints.add(new Point(piecePosition.x + 1, piecePosition.y - 1));
 			}
-			else if (theBoard.colorAt(piecePosition.y + 1, piecePosition.x + 1) != aPlayer.getColor()
-					&& !theBoard.occupied(piecePosition.y + 2, piecePosition.x + 2)){
-				endPoints.add(new Point(piecePosition.y + 2, piecePosition.x + 2));
+			else if (theBoard.colorAt(piecePosition.x + 1, piecePosition.y - 1) == aPlayer.getColor()
+					&& !theBoard.occupied(piecePosition.x + 2, piecePosition.y - 2)){
+				endPoints.add(new Point(piecePosition.x + 2, piecePosition.y - 2));
 			}
 		}
 		return endPoints;

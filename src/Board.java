@@ -41,28 +41,28 @@ public class Board {
 	   pieces = new Piece[8][8];
 
 	   // create white pieces
-	   for(int y = 0; y < 3; y++ ){
+	   for(int y = 2; y < 3; y++ ){
 	   		for (int x = 0; x < 8; x+=2){
 	   			pieces[y][x + (y % 2)] = new SinglePiece(Color.white);
 			}
 	   }
 
        // create black pieces
-       for(int y = 5; y < 8; y++ ){
+       for(int y = 5; y < 6; y++ ){
            for (int x = 0; x < 8; x+=2){
                pieces[y][x + (y % 2)] = new SinglePiece(Color.blue);
            }
        }
 
-//	   for(int i = 0; i < 8; i++){
-//		   for(int j = 0; j < 8; j++){
-//			   if(pieces[i][j] == null)
-//				   System.out.print('.' + "\t");
-//			   else
-//				   System.out.print("X" + "\t");
-//		   }
-//		   System.out.print("\n");
-//	   }
+	   for(int i = 0; i < 8; i++){
+		   for(int j = 0; j < 8; j++){
+			   if(pieces[i][j] == null)
+				   System.out.print('.' + "\t");
+			   else
+				   System.out.print("X" + "\t");
+		   }
+	   System.out.print("\n");
+	   }
 
    }
 
@@ -127,7 +127,10 @@ public class Board {
 	 * @return true or false depending on the situation
 	 */
 	public boolean occupied(int x, int y) {
-
+		if(x < 0 || y < 0 || x >= 8 || y >= 8)
+		{
+			return true;
+		}
 		return pieces[x][y] != null;
 
 	}
@@ -191,8 +194,10 @@ public class Board {
 	   // else retrun the color of the piece
 	   
 	   if( occupied( space ) ) {
-		   
-		   returnValue = pieces[space.x][space.y].getColor();
+		   Piece p = pieces[space.x][space.y];
+		   if(p != null) {
+			   returnValue = p.getColor();
+		   }
 		   
 	   }
    

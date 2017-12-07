@@ -158,7 +158,7 @@ public class Facade extends Component {
         }
         else
         {
-            System.out.println("you done fucked up a-aron");
+            System.out.println("You made an illegal move");
         }
 	}
 	

@@ -78,7 +78,7 @@ public class Rules {
 			Point start = currentMove.startLocation(); // Start of piece.
 			Point end = currentMove.endLocation();  // Attempted end location
 			// of the piece.
-			int pieceType = theBoard.getPieceAt( start ).getType();// Type of
+			int pieceType = theBoard.getPieceAt(start).getType();// Type of
 			// the piece.
 			// Contains any possible moves if the piece is on the wall.
 			Vector wallMoves = new Vector();
@@ -86,17 +86,19 @@ public class Rules {
 			Vector tempVec = new Vector();
 			Vector startVec = new Vector();
 			//Vector possibleJumps = new Vector();
-			Vector possibleJumps = checkForPossibleJumps( start, pieceType,
-					player );
+			Vector possibleJumps = checkForPossibleJumps(start, pieceType,
+					player);
 			// Check all pieces for jumps.
 			//if ( player.getColor() == Color.white ) {
 			//pieces = theBoard.whitePieces();
 			//} else {
 			//pieces = theBoard.bluePieces();
 			//}
-
+			return possibleJumps.contains(move.endLocation());
+		}
+		catch (Exception e){return  false;}
 			// For each piece of the current color, see if there are forced jumps.
-			for(int x = 0; x < theBoard.sizeOf().x; x++){
+		/*	for(int x = 0; x < theBoard.sizeOf().x; x++){
 				for (int y = 0; y < theBoard.sizeOf().y; y++)
 				{
 					if (theBoard.occupied(x,y))
@@ -112,8 +114,8 @@ public class Rules {
 						}
 					}
 				}
-			}
-
+			}*/
+/*
 
 			// Only proceed if player is trying to move one of his own pieces
 
@@ -150,15 +152,6 @@ public class Rules {
 
 					// If the piece starts on a wall and it's end position is
 					// valid then the move is legal.
-		    /*TODO remove
-		    if ( leftWallPieces.contains( start ) ||
-			 rightWallPieces.contains( new Integer( start ) ) ) {
-			wallMoves.addAll( wallPieceMoves( start, false,
-							  pieceType, player ) );
-			if ( wallMoves.contains( new Integer( end ) ) ) {
-			    retval = true;
-			}
-		    }*/
 
 					// If the end position is not occupied then validate move.
 					if ( !theBoard.occupied( end ) ) {
@@ -192,7 +185,7 @@ public class Rules {
 		} catch ( Exception e ) { }
 
 		return retval;
-
+*/
 	}
 
 	/**
@@ -319,36 +312,36 @@ public class Rules {
 		//blue pieces move 0->8
 		//white pieces move 8->0
 		Vector<Point> endPoints = new Vector<>();
-		if(pieceType == KING || aPlayer.getColor() == Color.BLACK){
-			if(!theBoard.occupied(piecePosition.x - 1, piecePosition.y - 1)){
-				endPoints.add(new Point(piecePosition.x - 1, piecePosition.y - 1));
+		if(pieceType == KING || aPlayer.getColor() == Color.WHITE){
+			if(!theBoard.occupied(piecePosition.y - 1, piecePosition.x - 1)){
+				endPoints.add(new Point(piecePosition.y - 1, piecePosition.x - 1));
 			}
-			else if (theBoard.colorAt(piecePosition.x - 1, piecePosition.y - 1) != aPlayer.getColor()
-					&& !theBoard.occupied(piecePosition.x - 2, piecePosition.y - 2)){
-				endPoints.add(new Point(piecePosition.x - 2, piecePosition.y - 2));
+			else if (theBoard.colorAt(piecePosition.y - 1, piecePosition.x - 1) != aPlayer.getColor()
+					&& !theBoard.occupied(piecePosition.y - 2, piecePosition.x - 2)){
+				endPoints.add(new Point(piecePosition.y - 2, piecePosition.x - 2));
 			}
-			if(!theBoard.occupied(piecePosition.x + 1, piecePosition.y - 1)){
-				endPoints.add(new Point(piecePosition.x + 1, piecePosition.y - 1));
+			if(!theBoard.occupied(piecePosition.y - 1, piecePosition.x + 1)){
+				endPoints.add(new Point(piecePosition.y - 1, piecePosition.x + 1));
 			}
-			else if (theBoard.colorAt(piecePosition.x + 1, piecePosition.y - 1) != aPlayer.getColor()
-					&& !theBoard.occupied(piecePosition.x + 2, piecePosition.y - 2)){
-				endPoints.add(new Point(piecePosition.x + 2, piecePosition.y - 2));
+			else if (theBoard.colorAt(piecePosition.y - 1, piecePosition.x + 1) != aPlayer.getColor()
+					&& !theBoard.occupied(piecePosition.y - 2, piecePosition.x + 2)){
+				endPoints.add(new Point(piecePosition.y - 2, piecePosition.x + 2));
 			}
 		}
-		if(pieceType == KING || aPlayer.getColor() == Color.WHITE){
-			if(!theBoard.occupied(piecePosition.x - 1, piecePosition.y + 1)){
-				endPoints.add(new Point(piecePosition.x - 1, piecePosition.y + 1));
+		if(pieceType == KING || aPlayer.getColor() == Color.BLACK){
+			if(!theBoard.occupied(piecePosition.y + 1, piecePosition.x - 1)){
+				endPoints.add(new Point(piecePosition.y + 1, piecePosition.x - 1));
 			}
-			else if (theBoard.colorAt(piecePosition.x - 1, piecePosition.y + 1) != aPlayer.getColor()
-					&& !theBoard.occupied(piecePosition.x - 2, piecePosition.y + 2)){
-				endPoints.add(new Point(piecePosition.x - 2, piecePosition.y + 2));
+			else if (theBoard.colorAt(piecePosition.y + 1, piecePosition.x - 1) != aPlayer.getColor()
+					&& !theBoard.occupied(piecePosition.y + 2, piecePosition.x - 2)){
+				endPoints.add(new Point(piecePosition.y + 2, piecePosition.x - 2));
 			}
-			if(!theBoard.occupied(piecePosition.x + 1, piecePosition.y + 1)){
-				endPoints.add(new Point(piecePosition.x + 1, piecePosition.y + 1));
+			if(!theBoard.occupied(piecePosition.y + 1, piecePosition.x + 1)){
+				endPoints.add(new Point(piecePosition.y + 1, piecePosition.x + 1));
 			}
-			else if (theBoard.colorAt(piecePosition.x + 1, piecePosition.y + 1) != aPlayer.getColor()
-					&& !theBoard.occupied(piecePosition.x + 2, piecePosition.y + 2)){
-				endPoints.add(new Point(piecePosition.x + 2, piecePosition.y + 2));
+			else if (theBoard.colorAt(piecePosition.y + 1, piecePosition.x + 1) != aPlayer.getColor()
+					&& !theBoard.occupied(piecePosition.y + 2, piecePosition.x + 2)){
+				endPoints.add(new Point(piecePosition.y + 2, piecePosition.x + 2));
 			}
 		}
 		return endPoints;
